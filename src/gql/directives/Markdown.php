@@ -11,7 +11,6 @@ use craft\gql\base\Directive;
 use craft\gql\GqlEntityRegistry;
 use GraphQL\Language\DirectiveLocation;
 use GraphQL\Type\Definition\Directive as GqlDirective;
-use GraphQL\Type\Definition\FieldArgument;
 use GraphQL\Type\Definition\ResolveInfo;
 use GraphQL\Type\Definition\Type;
 use yii\helpers\Markdown as MarkdownHelper;
@@ -40,18 +39,16 @@ class Markdown extends Directive
                 DirectiveLocation::FIELD,
             ],
             'args' => [
-                new FieldArgument([
-                    'name' => 'flavor',
+                'flavor' => [
                     'type' => Type::string(),
                     'defaultValue' => self::DEFAULT_FLAVOR,
                     'description' => 'The “flavor” of Markdown the input should be interpreted with. Accepts the same arguments as yii\\helpers\\Markdown::process().',
-                ]),
-                new FieldArgument([
-                    'name' => 'inlineOnly',
+                ],
+                'inlineOnly' => [
                     'type' => Type::boolean(),
                     'defaultValue' => self::DEFAULT_INLINE_ONLY,
                     'description' => 'Whether to only parse inline elements, omitting any `<p>` tags.',
-                ]),
+                ],
             ],
             'description' => 'Parses the passed field value as Markdown.',
         ]));

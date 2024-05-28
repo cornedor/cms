@@ -63,6 +63,7 @@ class DirectiveTest extends TestCase
         $resolveInfo = $this->make(ResolveInfo::class, [
             'fieldName' => 'someField',
             'fieldNodes' => $fieldNodes,
+            'path' => ['somePath'],
         ]);
 
         self::assertEquals($result, $type->resolveWithDirectives($element, [], null, $resolveInfo));
@@ -84,6 +85,7 @@ class DirectiveTest extends TestCase
         $resolveInfo = $this->make(ResolveInfo::class, [
             'fieldName' => 'filename',
             'fieldNodes' => $fieldNodes,
+            'path' => ['somePath'],
         ]);
 
         self::assertEquals($asset->getFilename(), $type->resolveWithDirectives($asset, [], null, $resolveInfo));

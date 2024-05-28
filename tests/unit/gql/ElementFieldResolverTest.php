@@ -313,7 +313,7 @@ class ElementFieldResolverTest extends TestCase
             'folderId' => 2,
             'filename' => 'foo.jpg',
         ]);
-        $resolveInfo = $this->make(ResolveInfo::class, ['fieldName' => 'url']);
+        $resolveInfo = $this->make(ResolveInfo::class, ['fieldName' => 'url', 'path' => ['somePath']]);
 
 
         $this->make(AssetGqlType::class)->resolveWithDirectives($asset, $fieldArguments, null, $resolveInfo);
@@ -330,7 +330,7 @@ class ElementFieldResolverTest extends TestCase
      */
     public function _runTest(mixed $element, string $gqlTypeClass, string $propertyName, mixed $result)
     {
-        $resolveInfo = $this->make(ResolveInfo::class, ['fieldName' => $propertyName]);
+        $resolveInfo = $this->make(ResolveInfo::class, ['fieldName' => $propertyName, 'path' => ['somePath']]);
         $resolve = function() use ($gqlTypeClass, $element, $resolveInfo) {
             /** @var ObjectType $type */
             $type = $this->make($gqlTypeClass);

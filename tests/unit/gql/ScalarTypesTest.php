@@ -26,7 +26,7 @@ use GraphQL\Language\AST\FloatValueNode;
 use GraphQL\Language\AST\IntValueNode;
 use GraphQL\Language\AST\NullValueNode;
 use GraphQL\Language\AST\StringValueNode;
-use GraphQL\Language\AST\ValueNode;
+use GraphQL\Language\AST\Node;
 use GraphQL\Type\Definition\ResolveInfo;
 use GraphQL\Type\Definition\ScalarType;
 
@@ -84,12 +84,12 @@ class ScalarTypesTest extends TestCase
      *
      * @dataProvider parsingLiteralDataProvider
      * @param ScalarType $type
-     * @param ValueNode $testValue
+     * @param Node $testValue
      * @param mixed $match
      * @param string|null $exceptionThrown
      * @throws Exception
      */
-    public function testParsingLiteral(ScalarType $type, ValueNode $testValue, mixed $match, ?string $exceptionThrown = null): void
+    public function testParsingLiteral(ScalarType $type, Node $testValue, mixed $match, ?string $exceptionThrown = null): void
     {
         if ($exceptionThrown) {
             $this->expectException($exceptionThrown);
@@ -119,6 +119,7 @@ class ScalarTypesTest extends TestCase
         ]);
         $resolveInfo = $this->make(ResolveInfo::class, [
             'fieldName' => 'fieldName',
+            'path' => ['somePath'],
         ]);
         $resolver = $dateField->getContentGqlType()['resolve'];
         $element = $this->make(Entry::class, [
@@ -216,24 +217,24 @@ class ScalarTypesTest extends TestCase
         GqlEntityRegistry::setPrefix('');
 
         return [
-            [DateTime::getType(), new IntValueNode(['value' => 2]), null, GqlException::class],
+            [DateTime::getType(), new IntValueNode(['value' => '2']), null, GqlException::class],
 
             [Number::getType(), new StringValueNode(['value' => '2.4']), 2.4],
             [Number::getType(), new StringValueNode(['value' => 'fake']), 0.0],
-            [Number::getType(), new FloatValueNode(['value' => 2.4]), 2.4],
-            [Number::getType(), new IntValueNode(['value' => 2]), 2],
+            [Number::getType(), new FloatValueNode(['value' => '2.4']), 2.4],
+            [Number::getType(), new IntValueNode(['value' => '2']), 2],
             [Number::getType(), new NullValueNode([]), null],
             [Number::getType(), new BooleanValueNode(['value' => false]), null, GqlException::class],
 
             [QueryArgument::getType(), new StringValueNode(['value' => '2']), '2'],
-            [QueryArgument::getType(), new IntValueNode(['value' => 2]), 2],
+            [QueryArgument::getType(), new IntValueNode(['value' => '2']), 2],
             [QueryArgument::getType(), new BooleanValueNode(['value' => true]), true],
             [QueryArgument::getType(), new FloatValueNode(['value' => '2']), null, GqlException::class],
 
             [Money::getType(), new StringValueNode(['value' => '2.4']), 2.4],
             [Money::getType(), new StringValueNode(['value' => 'fake']), 0.0],
-            [Money::getType(), new FloatValueNode(['value' => 2.4]), 2.4],
-            [Money::getType(), new IntValueNode(['value' => 2]), 2],
+            [Money::getType(), new FloatValueNode(['value' => '2.4']), 2.4],
+            [Money::getType(), new IntValueNode(['value' => '2']), 2],
             [Money::getType(), new NullValueNode([]), null],
             [Money::getType(), new BooleanValueNode(['value' => false]), null, GqlException::class],
         ];

@@ -28,12 +28,12 @@ class Money extends ScalarType implements SingularTypeInterface
     /**
      * @var string
      */
-    public $name = 'Money';
+    public string $name = 'Money';
 
     /**
      * @var string
      */
-    public $description = 'The `Money` scalar type represents a money value as a string.';
+    public ?string $description = 'The `Money` scalar type represents a money value as a string.';
 
     /**
      * Returns a singleton instance to ensure one type per schema.

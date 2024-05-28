@@ -123,7 +123,7 @@ class TypeResolverTest extends TestCase
 
         $filterParameters = [];
 
-        $resolveInfo = $this->make(ResolveInfo::class, ['fieldName' => 'someField', 'fieldNodes' => new \ArrayObject([null])]);
+        $resolveInfo = $this->make(ResolveInfo::class, ['fieldName' => 'someField', 'fieldNodes' => new \ArrayObject([null]), 'path' => ['somePath']]);
 
         /** @var Resolver $resolverClass */
         $resolvedField = $resolverClass::resolve($sourceElement, $filterParameters, null, $resolveInfo);

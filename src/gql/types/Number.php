@@ -27,12 +27,12 @@ class Number extends ScalarType implements SingularTypeInterface
     /**
      * @var string
      */
-    public $name = 'Number';
+    public string $name = 'Number';
 
     /**
      * @var string
      */
-    public $description = 'The `Number` scalar type represents a number that can be a float, an integer or a null value.';
+    public ?string $description = 'The `Number` scalar type represents a number that can be a float, an integer or a null value.';
 
     /**
      * Returns a singleton instance to ensure one type per schema.

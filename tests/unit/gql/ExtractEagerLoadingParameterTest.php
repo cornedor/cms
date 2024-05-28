@@ -386,6 +386,7 @@ GQL;
             'fieldName' => 'mockField',
             'variableValues' => $variables,
             'returnType' => $list ? Type::listOf($type) : $type,
+            'path' => ['somePath']
         ]);
     }
 }

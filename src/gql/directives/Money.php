@@ -13,7 +13,6 @@ use craft\gql\GqlEntityRegistry;
 use craft\helpers\MoneyHelper;
 use GraphQL\Language\DirectiveLocation;
 use GraphQL\Type\Definition\Directive as GqlDirective;
-use GraphQL\Type\Definition\FieldArgument;
 use GraphQL\Type\Definition\ResolveInfo;
 use GraphQL\Type\Definition\Type;
 
@@ -44,23 +43,22 @@ class Money extends Directive
     {
         $typeName = static::name();
 
-        return GqlEntityRegistry::getOrCreate($typeName, fn() => new self([
+        return GqlEntityRegistry::getOrCreate($typeName, fn () => new self([
             'name' => $typeName,
             'locations' => [
                 DirectiveLocation::FIELD,
             ],
             'args' => [
-                new FieldArgument([
-                    'name' => 'format',
+                'format' => [
                     'type' => Type::string(),
                     'defaultValue' => self::FORMAT_STRING,
                     'description' => 'This specifies the format to output. This can be `amount`, `decimal`, `number`, or `string`. It defaults to the `string`.',
-                ]),
-                new FieldArgument([
+                ],
+                'locale' => [
                     'name' => 'locale',
                     'type' => Type::string(),
                     'description' => 'The locale to use when formatting the money value. (e.g. `en_US`). This argument is only valid with `number` and `string` formats.',
-                ]),
+                ],
             ],
             'description' => 'Formats a money object to the desired format. It can be applied to any fields, but only changes a Money field.',
         ]));

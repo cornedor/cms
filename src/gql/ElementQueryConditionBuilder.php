@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @link https://craftcms.com/
  * @copyright Copyright (c) Pixel & Tonic, Inc.
@@ -367,10 +368,11 @@ class ElementQueryConditionBuilder extends Component
     private function _isInsideAssetQuery(): bool
     {
         if ($this->_resolveInfo->returnType instanceof WrappingType) {
-            return $this->_resolveInfo->returnType->getWrappedType()->name === AssetInterface::getName();
+            return $this->_resolveInfo->returnType->getWrappedType() instanceof AssetInterface;
         }
 
-        return $this->_resolveInfo->returnType->name === AssetInterface::getName();
+        // return $this->_resolveInfo->returnType->name === AssetInterface::getName();
+        return $this->_resolveInfo->returnType instanceof AssetInterface;
     }
 
     /**
@@ -514,7 +516,7 @@ class ElementQueryConditionBuilder extends Component
                     if (!$transformableAssetProperty) {
                         /** @var InlineFragmentNode|FragmentDefinitionNode|null $wrappingFragment */
                         if ($wrappingFragment) {
-                            $plan->when = function(Element $element) use ($wrappingFragment) {
+                            $plan->when = function (Element $element) use ($wrappingFragment) {
                                 return $element->getGqlTypeName() === $wrappingFragment->typeCondition->name->value;
                             };
                         }

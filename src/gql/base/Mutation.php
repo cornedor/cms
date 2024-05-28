@@ -40,7 +40,8 @@ abstract class Mutation
             $contentFieldType = $contentField->getContentGqlMutationArgumentType();
             $handle = $contentField->handle;
             $fieldList[$handle] = $contentFieldType;
-            $configArray = is_array($contentFieldType) ? $contentFieldType : $contentFieldType->config;
+            // TODO: Config is not read from contentFieldType, if contentFieldType is not an array.
+            $configArray = is_array($contentFieldType) ? $contentFieldType : [];
 
             if (is_array($configArray) && !empty($configArray['normalizeValue'])) {
                 $resolver->setValueNormalizer($handle, $configArray['normalizeValue']);
